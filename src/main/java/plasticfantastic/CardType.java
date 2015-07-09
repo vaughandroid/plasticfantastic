@@ -126,7 +126,7 @@ public class CardType {
          * @throws NullPointerException     if patterns is null, or one or more of the pattern strings is null
          * @throws IllegalArgumentException if one or more of the patterns is invalid
          */
-        Builder addSingleNumberPatterns(String... patterns) {
+        public Builder addSingleNumberPatterns(String... patterns) {
             if (patterns == null) {
                 throw new NullPointerException();
             }
@@ -151,7 +151,7 @@ public class CardType {
          * @throws NullPointerException     if patterns is null, or one or more of the pattern strings is null
          * @throws IllegalArgumentException if one or more of the patterns is invalid
          */
-        Builder addRangePatterns(String... patterns) {
+        public Builder addRangePatterns(String... patterns) {
             if (patterns == null) {
                 throw new NullPointerException();
             }
