@@ -27,6 +27,9 @@ public class ValidatedCardFactory {
 
     /**
      * Create a new factory with the given card types.
+     * <p/>
+     * Note that the list of card types is in priority order. i.e. When matching, the first {@link CardType} matching
+     * the card number's pattern will be used.
      *
      * @param cardTypes list of card types
      * @throws NullPointerException if cardTypes is null
@@ -38,6 +41,9 @@ public class ValidatedCardFactory {
 
     /**
      * Create a new factory with the given card types.
+     * <p/>
+     * Note that the list of card types is in priority order. i.e. When matching, the first {@link CardType} matching
+     * the card number's pattern will be used.
      *
      * @param cardTypes list of card types
      * @throws NullPointerException if cardTypes is null
@@ -54,11 +60,7 @@ public class ValidatedCardFactory {
     }
 
     /**
-     * Create a {@link ValidatedCard}.
-     * <p/>
-     * In the case where there is more than one {@link CardType} matching the card number's pattern, the one which
-     * also matches the card number's length is chosen. If neither (or both) match the length, the <em>last</em> match
-     * is chosen.
+     * See {@link #create(plasticfantastic.CardNumber)}
      *
      * @param cardNumberString partial or complete card number (must consist only of digits, and optional whitespace)
      * @return a new {@link ValidatedCard} instance, or null if a card type matching the card number could not be found
@@ -70,7 +72,9 @@ public class ValidatedCardFactory {
     }
 
     /**
-     * See {@link #create(String)}
+     * Create a {@link ValidatedCard}.
+     * <p/>
+     * The first {@link CardType} matching the card number's pattern is used, the first match is chosen.
      *
      * @param cardNumber card number to match
      * @return a new {@link ValidatedCard} instance, or null if a card type matching the card number could not be found
@@ -80,20 +84,15 @@ public class ValidatedCardFactory {
         if (cardNumber == null) {
             throw new NullPointerException("cardNumber cannot be null");
         }
-        CardType bestMatch = null;
-        boolean bestLengthOk = false;
+        ValidatedCard result = null;
         for (CardType cardType : cardTypes) {
             if (cardType != null
                     && cardType.checkPattern(cardNumber)) {
-                boolean lengthOk = cardType.checkLength(cardNumber);
-                if (bestMatch == null
-                        || (lengthOk || !bestLengthOk)) {
-                    bestMatch = cardType;
-                    bestLengthOk = lengthOk;
-                }
+                result = new ValidatedCard(cardNumber, cardType);
+                break;
             }
         }
 
-        return bestMatch != null ? new ValidatedCard(cardNumber, bestMatch) : null;
+        return result;
     }
 }
