@@ -109,7 +109,7 @@ public class CardType {
 
     /**
      * Builder for {@link CardType} instances.
-     * <p/>
+     * <p>
      * You must specify at least one pattern (single number/range) and at least one valid length for the card type.
      */
     public static class Builder {
@@ -118,7 +118,7 @@ public class CardType {
 
         /**
          * Add a set of single number prefixes for the card type. e.g. "1234", "56", "789"
-         * <p/>
+         * <p>
          * Calling this method multiple times will add more patterns.
          *
          * @param patterns one or more strings of digits
@@ -139,11 +139,11 @@ public class CardType {
         /**
          * A set of range prefixes for the card type. Each range pattern should consist of the lowest number
          * (inclusive), then a hyphen, then the highest number (also inclusive). e.g. "12-34", "567-890".
-         * <p/>
+         * <p>
          * A limitation is that the low and high numbers must have the same number of digits, so a pattern such as
-         * "1-20" is considered invalid. If needed, this can be achieved by simply adding 2 patterns - e.g. "1-9" &
+         * "1-20" is considered invalid. If needed, this can be achieved by simply adding 2 patterns - e.g. "1-9" &amp;
          * "10-20".
-         * <p/>
+         * <p>
          * Calling this method multiple times will add more patterns.
          *
          * @param patterns one or more strings of range patterns
@@ -164,10 +164,10 @@ public class CardType {
         /**
          * Set the allowable lengths for the card type.
          *
-         * @param validLengths
+         * @param validLengths one or more valid lengths for the card type
          * @return the builder instance, for method chaining
          * @throws NullPointerException     if validLengths is null
-         * @throws IllegalArgumentException if validLengths is empty, or one or more of the length values is <= 0
+         * @throws IllegalArgumentException if validLengths is empty, or one or more of the length values is &lt;= 0
          */
         public Builder validLengths(int... validLengths) {
             if (validLengths == null) {

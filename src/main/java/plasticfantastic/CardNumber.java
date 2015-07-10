@@ -17,7 +17,7 @@ package plasticfantastic;
 
 /**
  * A whole or partial credit card number.
- * <p/>
+ * <p>
  * Credit card numbers cannot be represented with simple numeric types since it is possible for them to have leading
  * zeros. See <a href="https://en.wikipedia.org/wiki/ISO/IEC_7812">here</a> for more information.
  */

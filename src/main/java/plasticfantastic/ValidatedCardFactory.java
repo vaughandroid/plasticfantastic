@@ -27,7 +27,7 @@ public class ValidatedCardFactory {
 
     /**
      * Create a new factory with the given card types.
-     * <p/>
+     * <p>
      * Note that the list of card types is in priority order. i.e. When matching, the first {@link CardType} matching
      * the card number's pattern will be used.
      *
@@ -41,7 +41,7 @@ public class ValidatedCardFactory {
 
     /**
      * Create a new factory with the given card types.
-     * <p/>
+     * <p>
      * Note that the list of card types is in priority order. i.e. When matching, the first {@link CardType} matching
      * the card number's pattern will be used.
      *
@@ -73,7 +73,7 @@ public class ValidatedCardFactory {
 
     /**
      * Create a {@link ValidatedCard}.
-     * <p/>
+     * <p>
      * The first {@link CardType} matching the card number's pattern is used, the first match is chosen.
      *
      * @param cardNumber card number to match
