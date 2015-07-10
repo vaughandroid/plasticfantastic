@@ -1,7 +1,8 @@
-group 'com.vaughandroid.plasticfantastic'
-version '0.9.2'
+group 'com.github.vaughandroid'
+version '0.9.3'
 
 apply plugin: 'java'
+apply plugin: 'maven'
 
 sourceCompatibility = 1.5
 
@@ -11,4 +12,19 @@ repositories {
 
 dependencies {
     testCompile 'junit:junit:4.11'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }
