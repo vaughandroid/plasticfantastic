@@ -25,7 +25,7 @@ import java.math.BigInteger;
 class RangePattern implements NumberPattern {
 
     private static final String REGEX_WHITESPACE = "\\s";
-    private static final String REGEX_VALID = "^[0-9]+[\\s]*[-][\\s]*[0-9]+$";
+    private static final String REGEX_VALID = "^[0-9]+[-][0-9]+$";
 
     private final String pattern;
     private final int checkLen;
@@ -84,6 +84,11 @@ class RangePattern implements NumberPattern {
             result = minVal.compareTo(checkVal) <= 0 && checkVal.compareTo(maxVal) <= 0;
         }
         return result;
+    }
+
+    @Override
+    public int getLength() {
+        return checkLen;
     }
 
     @Override

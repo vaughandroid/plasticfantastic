@@ -53,6 +53,11 @@ class SingleNumberPattern implements NumberPattern {
     }
 
     @Override
+    public int getLength() {
+        return numberPattern.length();
+    }
+
+    @Override
     public String toString() {
         return numberPattern;
     }
