@@ -54,24 +54,24 @@ public class CardType_CardNumberChecks {
     }
 
     private final CardNumber cardNumber;
-    private final boolean prefixMatches;
-    private final boolean lengthIsValid;
+    private final boolean expectPrefixMatch;
+    private final boolean expectLengthMatch;
 
-    public CardType_CardNumberChecks(String cardNumberString, boolean prefixMatches, boolean lengthIsValid) {
+    public CardType_CardNumberChecks(String cardNumberString, boolean expectPrefixMatch, boolean expectLengthMatch) {
         cardNumber = new CardNumber(cardNumberString);
-        this.prefixMatches = prefixMatches;
-        this.lengthIsValid = lengthIsValid;
+        this.expectPrefixMatch = expectPrefixMatch;
+        this.expectLengthMatch = expectLengthMatch;
     }
 
     @Test
     public void pattern_check() {
         assertThat("Card number: " + cardNumber.toString(),
-                CARD_TYPE.checkPattern(cardNumber), is(equalTo(prefixMatches)));
+                CARD_TYPE.patternMatches(cardNumber), is(equalTo(expectPrefixMatch)));
     }
 
     @Test
     public void length_check() {
         assertThat("Card number:" + cardNumber.toString(),
-                CARD_TYPE.checkLength(cardNumber), is(equalTo(lengthIsValid)));
+                CARD_TYPE.lengthMatches(cardNumber), is(equalTo(expectLengthMatch)));
     }
 }

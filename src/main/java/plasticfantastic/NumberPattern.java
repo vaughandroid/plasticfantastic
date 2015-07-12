@@ -27,4 +27,9 @@ interface NumberPattern {
      * @return true if the card number is a match for the pattern
      */
     boolean isMatch(CardNumber cardNumber);
+
+    /**
+     * @return the number of digits used for a match with this pattern
+     */
+    int getLength();
 }

@@ -38,8 +38,8 @@ public final class ValidatedCard {
         }
         this.number = number;
         this.type = type;
-        isNumberValid = type.checkPattern(number)
-                && type.checkLength(number)
+        isNumberValid = type.patternMatches(number)
+                && type.lengthMatches(number)
                 && number.passesLuhnCheck();
     }
 

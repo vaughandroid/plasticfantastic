@@ -42,8 +42,8 @@ public class CardTypeBuilder_Misc {
                 .validLengths(10)
                 .build();
 
-        assertThat(cardType.checkPattern(new CardNumber("123")), is(equalTo(true)));
-        assertThat(cardType.checkPattern(new CardNumber("456")), is(equalTo(true)));
+        assertThat(cardType.patternMatches(new CardNumber("123")), is(equalTo(true)));
+        assertThat(cardType.patternMatches(new CardNumber("456")), is(equalTo(true)));
     }
 
     @Test
@@ -54,8 +54,8 @@ public class CardTypeBuilder_Misc {
                 .validLengths(10)
                 .build();
 
-        assertThat(cardType.checkPattern(new CardNumber("150")), is(equalTo(true)));
-        assertThat(cardType.checkPattern(new CardNumber("350")), is(equalTo(true)));
+        assertThat(cardType.patternMatches(new CardNumber("150")), is(equalTo(true)));
+        assertThat(cardType.patternMatches(new CardNumber("350")), is(equalTo(true)));
     }
 
     @Test(expected = IllegalStateException.class)

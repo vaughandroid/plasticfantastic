@@ -213,22 +213,47 @@ public class CardType {
     }
 
     /**
+     * Stronger matches will return a larger number. Will return 0 if there is no match.
+     * <p>
+     * Match strength is based on:
+     * <ol>
+     *     <li>The length of the longest pattern which matches the card number.</li>
+     *     <li>Whether the card number is a valid length for the card type. (But only if the pattern matches.)</li>
+     * </ol>
+     *
+     * @param cardNumber to check
+     * @return 0 for no match, or &gt;0 for a match
+     */
+    public int getMatchStrength(CardNumber cardNumber) {
+        int result = 0;
+        for (int i = 0; i < numberPatterns.length; i++) {
+            if (numberPatterns[i].isMatch(cardNumber)) {
+                // TODO: if we sort the patterns by length, could exit this loop as soon as a match is found
+                int length = numberPatterns[i].getLength();
+                if (length > result) {
+                    result = length;
+                }
+            }
+        }
+        if (result > 0) {
+            // Factor in whether the card number is a valid length for the card type.
+            result <<= 1;
+            if (lengthMatches(cardNumber)) {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    /**
      * Check that the leading digits of the given card number match one or more of the allowed patterns for this card
      * type.
      *
      * @param cardNumber to check
      * @return true if the card number matches at least one defined patterns for this card type
      */
-    public boolean checkPattern(CardNumber cardNumber) {
-        boolean result = false;
-        for (int i = 0; i < numberPatterns.length; i++) {
-            if (numberPatterns[i].isMatch(cardNumber)) {
-                result = true;
-                break;
-            }
-        }
-
-        return result;
+    public boolean patternMatches(CardNumber cardNumber) {
+        return getMatchStrength(cardNumber) > 0;
     }
 
     /**
@@ -237,7 +262,7 @@ public class CardType {
      * @param cardNumber to check
      * @return true if the card number length matches one of the valid lengths defined for this card type
      */
-    public boolean checkLength(CardNumber cardNumber) {
+    public boolean lengthMatches(CardNumber cardNumber) {
         boolean result = false;
         if (validLengths != null) {
             for (int i = 0; i < validLengths.length; i++) {
