@@ -87,7 +87,7 @@ public class ValidatedCardFactory {
         ValidatedCard result = null;
         for (CardType cardType : cardTypes) {
             if (cardType != null
-                    && cardType.checkPattern(cardNumber)) {
+                    && cardType.patternMatches(cardNumber)) {
                 result = new ValidatedCard(cardNumber, cardType);
                 break;
             }
