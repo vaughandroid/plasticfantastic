@@ -74,7 +74,8 @@ public class ValidatedCardFactory {
     /**
      * Create a {@link ValidatedCard}.
      * <p>
-     * The first {@link CardType} matching the card number's pattern is used, the first match is chosen.
+     * If there are multiple matches, the {@link CardType} with the strongest match is used. If there are multiple
+     * matches with the same strength, the first of them is used.
      *
      * @param cardNumber card number to match
      * @return a new {@link ValidatedCard} instance, or null if a card type matching the card number could not be found
@@ -85,11 +86,14 @@ public class ValidatedCardFactory {
             throw new NullPointerException("cardNumber cannot be null");
         }
         ValidatedCard result = null;
+        int resultStrength = 0;
         for (CardType cardType : cardTypes) {
-            if (cardType != null
-                    && cardType.patternMatches(cardNumber)) {
-                result = new ValidatedCard(cardNumber, cardType);
-                break;
+            if (cardType != null) {
+                int strength = cardType.getMatchStrength(cardNumber);
+                if (strength > resultStrength) {
+                    result = new ValidatedCard(cardNumber, cardType);
+                    resultStrength = strength;
+                }
             }
         }
 

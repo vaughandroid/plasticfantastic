@@ -34,23 +34,24 @@ import static org.junit.Assert.assertThat;
 public class ValidatedCardFactory_SucessfulCreation {
 
     private static final CardType TYPE_1 = new CardType.Builder().addSingleNumberPatterns("1234").validLengths(10).build();
-    /**
-     * Note that this type should never be matched, since anything matching this would match TYPE_1.
-     * The correct way to handle this would be to pass this into the factory constructor before TYPE_1.
-     */
     private static final CardType TYPE_2 = new CardType.Builder().addSingleNumberPatterns("12345").validLengths(11).build();
     private static final CardType TYPE_3 = new CardType.Builder().addSingleNumberPatterns("123").validLengths(10).build();
+    private static final CardType TYPE_4 = new CardType.Builder().addSingleNumberPatterns("12345").validLengths(12).build();
 
-    private static final ValidatedCardFactory FACTORY = new ValidatedCardFactory(TYPE_1, TYPE_2, TYPE_3);
+    private static final ValidatedCardFactory FACTORY = new ValidatedCardFactory(TYPE_1, TYPE_2, TYPE_3, TYPE_4);
 
     @Parameterized.Parameters
     public static Iterable<Object[]> buildParameters() {
         return Arrays.asList(new Object[][]{
-                {"1234567890", TYPE_1},
-                {"12345678901", TYPE_1}, // TYPE_2 is a 'better' match, but TYPE_1 is prioritised since it is passed into the constructor first
-                {"123 0 567890", TYPE_3},
-                {"123", TYPE_3},
                 {"1234", TYPE_1},
+                {"12345", TYPE_2},
+                {"123", TYPE_3},
+                {"12345678901", TYPE_2},
+                {"1234567890", TYPE_2},
+                {"123456789012", TYPE_4},
+                {"1234 0 67890", TYPE_1},
+                {"123 0 567890", TYPE_3},
+
         });
     }
 
