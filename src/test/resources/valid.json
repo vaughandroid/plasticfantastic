@@ -12,8 +12,8 @@
   {
     "name": "Type 2",
     "numberPatterns": [
-      "7890",
-      "98"
+      "70-80",
+      "90"
     ],
     "validLengths": [
       10
@@ -22,7 +22,7 @@
   {
     "name": "Type 3",
     "numberPatterns": [
-      "7"
+      "101-202"
     ],
     "validLengths": [
       10

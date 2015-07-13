@@ -31,6 +31,9 @@ import static org.junit.Assert.assertThat;
  */
 public class ValidatedCardFactory_Misc {
 
+    private static final CardType TYPE_1 = new CardType.Builder().addSingleNumberPatterns("123").validLengths(10).build();
+    private static final CardType TYPE_2 = new CardType.Builder().addSingleNumberPatterns("456").validLengths(11).build();
+
     @Test(expected = NullPointerException.class)
     public void pass_null_to_constructor_using_varargs_throws_NullPointerException() {
         new ValidatedCardFactory((CardType[]) null);
@@ -53,25 +56,25 @@ public class ValidatedCardFactory_Misc {
 
     @Test
     public void create_using_string_for_list_including_null_doesnt_throw_exception() {
-        ValidatedCardFactory factory = new ValidatedCardFactory(CardType.VISA, CardType.MASTERCARD, null);
+        ValidatedCardFactory factory = new ValidatedCardFactory(TYPE_1, TYPE_2, null);
         factory.create("123");
     }
 
     @Test(expected = NullPointerException.class)
     public void create_for_null_string_throws_NullPointerException() {
-        ValidatedCardFactory factory = new ValidatedCardFactory(CardType.VISA, CardType.MASTERCARD);
+        ValidatedCardFactory factory = new ValidatedCardFactory(TYPE_1, TYPE_2);
         factory.create((String) null);
     }
 
     @Test
     public void create_using_card_number_for_list_including_null_doesnt_throw_exception() {
-        ValidatedCardFactory factory = new ValidatedCardFactory(CardType.VISA, CardType.MASTERCARD, null);
+        ValidatedCardFactory factory = new ValidatedCardFactory(TYPE_1, TYPE_2, null);
         factory.create(new CardNumber("123"));
     }
 
     @Test(expected = NullPointerException.class)
     public void create_for_null_card_number_throws_NullPointerException() {
-        ValidatedCardFactory factory = new ValidatedCardFactory(CardType.VISA, CardType.MASTERCARD);
+        ValidatedCardFactory factory = new ValidatedCardFactory(TYPE_1, TYPE_2);
         factory.create((CardNumber) null);
     }
 }

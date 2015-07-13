@@ -15,6 +15,10 @@
  */
 package plasticfantastic;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,83 +33,6 @@ import java.util.List;
  * information.
  */
 public class CardType {
-
-    public static final CardType AMERICAN_EXPRESS = new Builder()
-            .addSingleNumberPatterns("34", "37")
-            .validLengths(15)
-            .build();
-    public static final CardType CHINA_UNIONPAY = new Builder()
-            .addSingleNumberPatterns("62")
-            .validLengths(16, 17, 18, 19)
-            .build();
-    public static final CardType DINERS_CLUB_CARTE_BLANCHE = new Builder()
-            .addRangePatterns("300-305")
-            .validLengths(14)
-            .build();
-    public static final CardType DINERS_CLUB_INTERNATIONAL = new Builder()
-            .addSingleNumberPatterns("309", "36", "38", "39")
-            .addRangePatterns("300-305")
-            .validLengths(14)
-            .build();
-    public static final CardType DINERS_CLUB_US_AND_CANADA = new Builder()
-            .addSingleNumberPatterns("54", "55")
-            .validLengths(16)
-            .build();
-    public static final CardType DISCOVER = new Builder()
-            .addSingleNumberPatterns("6011", "65")
-            .addRangePatterns("622126-622925", "644-649")
-            .validLengths(16)
-            .build();
-    public static final CardType INTERPAYMENT = new Builder()
-            .addSingleNumberPatterns("636")
-            .validLengths(16, 17, 18, 19)
-            .build();
-    public static final CardType INSTAPAYMENT = new Builder()
-            .addRangePatterns("637-639")
-            .validLengths(16)
-            .build();
-    public static final CardType JCB = new Builder()
-            .addRangePatterns("3528-3589")
-            .validLengths(16)
-            .build();
-    public static final CardType MAESTRO = new Builder()
-            .addRangePatterns("500000-509999", "560000-699999")
-            .validLengths(12, 13, 14, 15, 16, 17, 18, 19)
-            .build();
-    public static final CardType DANKORT = new Builder()
-            .addSingleNumberPatterns("5019")
-            .validLengths(16)
-            .build();
-    public static final CardType MASTERCARD = new Builder()
-            .addRangePatterns("51-55")
-            .validLengths(16)
-            .build();
-    public static final CardType VISA = new Builder()
-            .addSingleNumberPatterns("4")
-            .validLengths(13, 16)
-            .build();
-    public static final CardType UATP = new Builder()
-            .addSingleNumberPatterns("1")
-            .validLengths(15)
-            .build();
-
-    public static List<CardType> createListWithAllTypes() {
-        return Arrays.asList(
-                AMERICAN_EXPRESS,
-                CHINA_UNIONPAY,
-                DINERS_CLUB_CARTE_BLANCHE,
-                DINERS_CLUB_INTERNATIONAL,
-                DINERS_CLUB_US_AND_CANADA,
-                DISCOVER,
-                INTERPAYMENT,
-                INSTAPAYMENT,
-                JCB,
-                MAESTRO,
-                DANKORT,
-                MASTERCARD,
-                VISA,
-                UATP);
-    }
 
     /**
      * Builder for {@link CardType} instances.
@@ -161,6 +88,18 @@ public class CardType {
             return this;
         }
 
+        /**
+         * Add a list of number patterns for the card type.
+         * <p>
+         * TODO: document pattern requirements.
+         * <p>
+         * Calling this method multiple times will add more patterns.
+         *
+         * @param patterns one or more strings of digits
+         * @return the builder instance, for method chaining
+         * @throws NullPointerException     if patterns is null, or one or more of the pattern strings is null
+         * @throws IllegalArgumentException if one or more of the patterns is invalid
+         */
         public Builder addNumberPatterns(String... patterns) { // TODO: tests
             if (patterns == null) {
                 throw new NullPointerException();
