@@ -40,14 +40,14 @@ public class CardTypeBuilder_Misc {
     }
 
     @Test
-    public void calling_addNumberPatterns_again_overwrites() {
+    public void calling_addNumberPatterns_again_adds_to_list() {
         CardType cardType = new CardType.Builder("Type Name")
                 .withNumberPatterns("123")
                 .withNumberPatterns("456")
                 .withValidLengths(10)
                 .build();
 
-        assertThat(cardType.patternMatches(new CardNumber("123")), is(equalTo(false)));
+        assertThat(cardType.patternMatches(new CardNumber("123")), is(equalTo(true)));
         assertThat(cardType.patternMatches(new CardNumber("456")), is(equalTo(true)));
     }
 

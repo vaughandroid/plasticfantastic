@@ -41,7 +41,7 @@ public class CardType {
      */
     public static class Builder {
         private final String name;
-        private List<NumberPattern> patternList;
+        private final List<NumberPattern> patternList = new ArrayList<NumberPattern>();
         private int[] validLengths;
 
         /**
@@ -74,7 +74,6 @@ public class CardType {
             if (patterns == null) {
                 throw new NullPointerException();
             }
-            patternList = new ArrayList<NumberPattern>(patterns.length);
             for (int i = 0; i < patterns.length; i++) {
                 if (patterns[i] != null) {
                     // TODO: stricter check for pattern type
