@@ -34,17 +34,17 @@ public class CardTypeBuilder_Misc {
     @Test
     public void single_number_pattern_and_length_builds_successfully() {
         new CardType.Builder("Type Name")
-                .addNumberPatterns("123")
-                .validLengths(10)
+                .withNumberPatterns("123")
+                .withValidLengths(10)
                 .build();
     }
 
     @Test
     public void calling_addNumberPatterns_again_overwrites() {
         CardType cardType = new CardType.Builder("Type Name")
-                .addNumberPatterns("123")
-                .addNumberPatterns("456")
-                .validLengths(10)
+                .withNumberPatterns("123")
+                .withNumberPatterns("456")
+                .withValidLengths(10)
                 .build();
 
         assertThat(cardType.patternMatches(new CardNumber("123")), is(equalTo(false)));
@@ -58,11 +58,11 @@ public class CardTypeBuilder_Misc {
 
     @Test(expected = IllegalStateException.class)
     public void no_lengths_throws_IllegalStateException() {
-        new CardType.Builder("Type Name").addNumberPatterns("123").build();
+        new CardType.Builder("Type Name").withNumberPatterns("123").build();
     }
 
     @Test(expected = IllegalStateException.class)
     public void no_patterns_throws_IllegalStateException() {
-        new CardType.Builder("Type Name").validLengths(10).build();
+        new CardType.Builder("Type Name").withValidLengths(10).build();
     }
 }

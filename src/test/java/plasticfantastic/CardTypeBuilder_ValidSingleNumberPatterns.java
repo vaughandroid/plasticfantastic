@@ -23,7 +23,7 @@ import java.util.Arrays;
 
 /**
  * Tests for passing valid single number arguments to
- * {@link plasticfantastic.CardType.Builder#addNumberPatterns(String...)}.
+ * {@link plasticfantastic.CardType.Builder#withNumberPatterns(String...)}.
  */
 @RunWith(Parameterized.class)
 public class CardTypeBuilder_ValidSingleNumberPatterns {
@@ -47,6 +47,6 @@ public class CardTypeBuilder_ValidSingleNumberPatterns {
 
     @Test
     public void pattern_is_accepted() {
-        new CardType.Builder("Type Name").addNumberPatterns(numberPatterns);
+        new CardType.Builder("Type Name").withNumberPatterns(numberPatterns);
     }
 }

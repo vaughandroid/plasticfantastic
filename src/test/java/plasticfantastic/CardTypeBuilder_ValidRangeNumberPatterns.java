@@ -22,7 +22,7 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 
 /**
- * Tests for passing valid range arguments to {@link plasticfantastic.CardType.Builder#addNumberPatterns(String...)}.
+ * Tests for passing valid range arguments to {@link plasticfantastic.CardType.Builder#withNumberPatterns(String...)}.
  */
 @RunWith(Parameterized.class)
 public class CardTypeBuilder_ValidRangeNumberPatterns {
@@ -46,6 +46,6 @@ public class CardTypeBuilder_ValidRangeNumberPatterns {
 
     @Test
     public void pattern_is_accepted() {
-        new CardType.Builder("Type Name").addNumberPatterns(numberPatterns);
+        new CardType.Builder("Type Name").withNumberPatterns(numberPatterns);
     }
 }

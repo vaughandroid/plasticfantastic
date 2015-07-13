@@ -70,7 +70,7 @@ public class CardType {
          * @return the builder instance, for method chaining
          * @throws IllegalArgumentException if one or more of the patterns is invalid
          */
-        public Builder addNumberPatterns(String... patterns) {
+        public Builder withNumberPatterns(String... patterns) {
             if (patterns == null) {
                 throw new NullPointerException();
             }
@@ -96,7 +96,7 @@ public class CardType {
          * @throws NullPointerException     if validLengths is null
          * @throws IllegalArgumentException if validLengths is empty, or one or more of the length values is &lt;= 0
          */
-        public Builder validLengths(int... validLengths) {
+        public Builder withValidLengths(int... validLengths) {
             if (validLengths == null) {
                 throw new NullPointerException();
             }

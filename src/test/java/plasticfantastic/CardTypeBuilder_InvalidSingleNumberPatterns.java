@@ -15,20 +15,18 @@
  */
 package plasticfantastic;
 
-import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
  * Tests for passing invalid single number arguments to
- * {@link plasticfantastic.CardType.Builder#addNumberPatterns(String...)}.
+ * {@link plasticfantastic.CardType.Builder#withNumberPatterns(String...)}.
  */
 @RunWith(Parameterized.class)
 public class CardTypeBuilder_InvalidSingleNumberPatterns {
@@ -50,6 +48,6 @@ public class CardTypeBuilder_InvalidSingleNumberPatterns {
 
     @Test(expected = IllegalArgumentException.class)
     public void pattern_is_accepted_or_throws_IllegalArgumentException() {
-        new CardType.Builder("Type Name").addNumberPatterns(numberPatterns).validLengths(10).build();
+        new CardType.Builder("Type Name").withNumberPatterns(numberPatterns).withValidLengths(10).build();
     }
 }

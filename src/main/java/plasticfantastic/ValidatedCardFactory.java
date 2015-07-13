@@ -147,13 +147,13 @@ public class ValidatedCardFactory {
                         || definition.numberPatterns.length == 0) {
                     throw new IllegalArgumentException("'numberPatterns' is missing or empty");
                 }
-                builder.addNumberPatterns(definition.numberPatterns);
+                builder.withNumberPatterns(definition.numberPatterns);
 
                 if (definition.validLengths == null
                         || definition.validLengths.length == 0) {
                     throw new IllegalArgumentException("'validLengths' is missing or empty");
                 }
-                builder.validLengths(definition.validLengths);
+                builder.withValidLengths(definition.validLengths);
 
                 cardTypes[i] = builder.build();
             } catch (IllegalArgumentException e) {

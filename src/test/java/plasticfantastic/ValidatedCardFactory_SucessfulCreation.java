@@ -31,10 +31,10 @@ import static org.junit.Assert.assertThat;
 @RunWith(Parameterized.class)
 public class ValidatedCardFactory_SucessfulCreation {
 
-    private static final CardType TYPE_1 = new CardType.Builder("Type Name").addNumberPatterns("1234").validLengths(10).build();
-    private static final CardType TYPE_2 = new CardType.Builder("Type Name").addNumberPatterns("12345").validLengths(11).build();
-    private static final CardType TYPE_3 = new CardType.Builder("Type Name").addNumberPatterns("123").validLengths(10).build();
-    private static final CardType TYPE_4 = new CardType.Builder("Type Name").addNumberPatterns("12345").validLengths(12).build();
+    private static final CardType TYPE_1 = new CardType.Builder("Type Name").withNumberPatterns("1234").withValidLengths(10).build();
+    private static final CardType TYPE_2 = new CardType.Builder("Type Name").withNumberPatterns("12345").withValidLengths(11).build();
+    private static final CardType TYPE_3 = new CardType.Builder("Type Name").withNumberPatterns("123").withValidLengths(10).build();
+    private static final CardType TYPE_4 = new CardType.Builder("Type Name").withNumberPatterns("12345").withValidLengths(12).build();
 
     private static final ValidatedCardFactory FACTORY = new ValidatedCardFactory(TYPE_1, TYPE_2, TYPE_3, TYPE_4);
 

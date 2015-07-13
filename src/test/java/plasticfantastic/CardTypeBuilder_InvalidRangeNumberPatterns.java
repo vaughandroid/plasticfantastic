@@ -15,19 +15,17 @@
  */
 package plasticfantastic;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Tests for passing invalid range arguments to {@link plasticfantastic.CardType.Builder#addNumberPatterns(String...)}.
+ * Tests for passing invalid range arguments to {@link plasticfantastic.CardType.Builder#withNumberPatterns(String...)}.
  */
 @RunWith(Parameterized.class)
 public class CardTypeBuilder_InvalidRangeNumberPatterns {
@@ -54,6 +52,6 @@ public class CardTypeBuilder_InvalidRangeNumberPatterns {
 
     @Test(expected = IllegalArgumentException.class)
     public void pattern_is_accepted_or_throws_IllegalArgumentException() {
-        new CardType.Builder("Type Name").addNumberPatterns(numberPatterns).validLengths(10).build();
+        new CardType.Builder("Type Name").withNumberPatterns(numberPatterns).withValidLengths(10).build();
     }
 }

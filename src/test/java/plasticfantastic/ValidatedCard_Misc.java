@@ -28,8 +28,8 @@ import static org.junit.Assert.assertThat;
 public class ValidatedCard_Misc {
 
     private static final CardType CARD_TYPE = new CardType.Builder("Type Name")
-            .addNumberPatterns("1234")
-            .validLengths(10)
+            .withNumberPatterns("1234")
+            .withValidLengths(10)
             .build();
 
     @Test(expected = NullPointerException.class)
