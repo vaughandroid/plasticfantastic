@@ -38,7 +38,7 @@ class RangePattern implements NumberPattern {
      * @throws NullPointerException     if pattern is null
      * @throws IllegalArgumentException if pattern is not valid
      */
-    RangePattern(String pattern) {
+    RangePattern(String pattern) { // TODO: pass in min, max
         if (pattern == null) {
             throw new NullPointerException("Pattern cannot be null");
         }
