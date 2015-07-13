@@ -182,6 +182,13 @@ public class CardType {
     }
 
     /**
+     * @return the name of the card type
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * Stronger matches will return a larger number. Will return 0 if there is no match.
      * <p>
      * Match strength is based on:

@@ -41,7 +41,7 @@ public class ValidatedCardFactory {
      * @throws IOException if there was some problem reading the file from the filesystem
      */
     public static ValidatedCardFactory withDefaultCardTypes() throws IOException {
-        String path = ValidatedCardFactory.class.getResource("plasticfantastic_card_types.json").toString();
+        String path = ValidatedCardFactory.class.getResource("/plasticfantastic_card_types.json").getFile();
         return fromFile(new File(path));
     }
 
