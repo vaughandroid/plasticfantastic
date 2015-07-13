@@ -46,6 +46,6 @@ public class CardTypeBuilder_ValidSingleNumberPatterns {
 
     @Test
     public void pattern_is_accepted() {
-        new CardType.Builder().addSingleNumberPatterns(numberPatterns);
+        new CardType.Builder("Type Name").addSingleNumberPatterns(numberPatterns);
     }
 }

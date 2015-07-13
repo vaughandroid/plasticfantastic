@@ -40,8 +40,19 @@ public class CardType {
      * You must specify at least one pattern (single number/range) and at least one valid length for the card type.
      */
     public static class Builder {
+        private final String name;
         private final List<NumberPattern> patternList = new ArrayList<NumberPattern>();
         private int[] validLengths;
+
+        /**
+         * @param name name of the card type
+         */
+        public Builder(String name) {
+            if (name == null) {
+                throw new NullPointerException("name cannot be null");
+            }
+            this.name = name;
+        }
 
         /**
          * Add a set of single number prefixes for the card type. e.g. "1234", "56", "789"
@@ -156,14 +167,16 @@ public class CardType {
                 throw new IllegalStateException("Must define one or more length values.");
             }
             NumberPattern[] patterns = patternList.toArray(new NumberPattern[patternList.size()]);
-            return new CardType(patterns, validLengths);
+            return new CardType(name, patterns, validLengths);
         }
     }
 
+    private final String name;
     private final NumberPattern[] numberPatterns;
     private final int[] validLengths;
 
-    private CardType(NumberPattern[] numberPatterns, int[] validLengths) {
+    private CardType(String name, NumberPattern[] numberPatterns, int[] validLengths) {
+        this.name = name;
         this.numberPatterns = numberPatterns;
         this.validLengths = validLengths;
     }
@@ -234,7 +247,9 @@ public class CardType {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{patterns:[");
+        sb.append("{name:\"");
+        sb.append(name);
+        sb.append("\", patterns:[");
         for (int i = 0; i < numberPatterns.length; i++) {
             if (i > 0) {
                 sb.append(", ");

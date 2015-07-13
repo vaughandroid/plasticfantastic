@@ -49,7 +49,7 @@ public class ValidatedCardFactory_ParsingFromCardTypeDefinitions {
 
         Assert.assertThat(
                 ValidatedCardFactory.fromCardTypeDefinitions(definition).toString(),
-                is(equalTo("{cardTypes:[{patterns:[123, 456], lengths:[14, 15]}]}")));
+                is(equalTo("{cardTypes:[{name:\"Def 1\", patterns:[123, 456], lengths:[14, 15]}]}")));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class ValidatedCardFactory_ParsingFromCardTypeDefinitions {
 
         Assert.assertThat(
                 ValidatedCardFactory.fromCardTypeDefinitions(definition).toString(),
-                is(equalTo("{cardTypes:[{patterns:[123-456, 78-90], lengths:[14, 15]}]}")));
+                is(equalTo("{cardTypes:[{name:\"Def 1\", patterns:[123-456, 78-90], lengths:[14, 15]}]}")));
     }
 
     @Test
@@ -77,7 +77,7 @@ public class ValidatedCardFactory_ParsingFromCardTypeDefinitions {
 
         Assert.assertThat(
                 ValidatedCardFactory.fromCardTypeDefinitions(definition1, definition2).toString(),
-                is(equalTo("{cardTypes:[{patterns:[123, 45-67], lengths:[14, 15]}, {patterns:[8-9, 0], lengths:[10]}]}")));
+                is(equalTo("{cardTypes:[{name:\"Def 1\", patterns:[123, 45-67], lengths:[14, 15]}, {name:\"Def 2\", patterns:[8-9, 0], lengths:[10]}]}")));
     }
 
     @Test(expected = IllegalArgumentException.class)

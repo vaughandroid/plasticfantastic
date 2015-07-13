@@ -35,7 +35,7 @@ import static org.hamcrest.CoreMatchers.is;
 public class ValidatedCardFactory_ParsingFromJson {
 
     public static final String EXPECTED_STRING_VALID =
-            "{cardTypes:[{patterns:[123, 456], lengths:[14, 15]}, {patterns:[70-80, 90], lengths:[10]}, {patterns:[101-202], lengths:[10]}]}";
+            "{cardTypes:[{name:\"Type 1\", patterns:[123, 456], lengths:[14, 15]}, {name:\"Type 2\", patterns:[70-80, 90], lengths:[10]}, {name:\"Type 3\", patterns:[101-202], lengths:[10]}]}";
 
     private static String getResourcePath(String filename) {
         return ValidatedCardFactory_ParsingFromJson.class.getClassLoader().getResource(filename).getFile();

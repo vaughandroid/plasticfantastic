@@ -59,7 +59,7 @@ public class CardTypeBuilder_InvalidRangeNumberPatterns {
     public void pattern_is_accepted_or_throws_IllegalArgumentException() {
         Throwable caught = null;
         try {
-            new CardType.Builder().addRangePatterns(numberPatterns).validLengths(10).build();
+            new CardType.Builder("Type Name").addRangePatterns(numberPatterns).validLengths(10).build();
         } catch (Throwable t) {
             caught = t;
         }

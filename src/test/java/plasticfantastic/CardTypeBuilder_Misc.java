@@ -26,9 +26,14 @@ import static org.junit.Assert.assertThat;
  */
 public class CardTypeBuilder_Misc {
 
+    @Test(expected = NullPointerException.class)
+    public void null_name_throws_NullPointerException() {
+        new CardType.Builder(null);
+    }
+
     @Test
     public void single_number_pattern_and_length_builds_successfully() {
-        new CardType.Builder()
+        new CardType.Builder("Type Name")
                 .addSingleNumberPatterns("123")
                 .validLengths(10)
                 .build();
@@ -36,7 +41,7 @@ public class CardTypeBuilder_Misc {
 
     @Test
     public void single_number_pattern_multiple_calls_all_included() {
-        CardType cardType = new CardType.Builder()
+        CardType cardType = new CardType.Builder("Type Name")
                 .addSingleNumberPatterns("123")
                 .addSingleNumberPatterns("456")
                 .validLengths(10)
@@ -48,7 +53,7 @@ public class CardTypeBuilder_Misc {
 
     @Test
     public void range_pattern_multiple_calls_all_included() {
-        CardType cardType = new CardType.Builder()
+        CardType cardType = new CardType.Builder("Type Name")
                 .addRangePatterns("100-200")
                 .addRangePatterns("300-400")
                 .validLengths(10)
@@ -60,16 +65,16 @@ public class CardTypeBuilder_Misc {
 
     @Test(expected = IllegalStateException.class)
     public void no_patterns_or_lengths_throws_IllegalStateException() {
-        new CardType.Builder().build();
+        new CardType.Builder("Type Name").build();
     }
 
     @Test(expected = IllegalStateException.class)
     public void no_lengths_throws_IllegalStateException() {
-        new CardType.Builder().addSingleNumberPatterns("123").build();
+        new CardType.Builder("Type Name").addSingleNumberPatterns("123").build();
     }
 
     @Test(expected = IllegalStateException.class)
     public void no_patterns_throws_IllegalStateException() {
-        new CardType.Builder().validLengths(10).build();
+        new CardType.Builder("Type Name").validLengths(10).build();
     }
 }

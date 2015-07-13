@@ -46,6 +46,6 @@ public class CardTypeBuilder_ValidRangeNumberPatterns {
 
     @Test
     public void pattern_is_accepted() {
-        new CardType.Builder().addRangePatterns(numberPatterns);
+        new CardType.Builder("Type Name").addRangePatterns(numberPatterns);
     }
 }
