@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Type 1",
+    "numberPatterns": [
+      "123",
+      "456"
+    ],
+    "validLengths": [
+      14, 15
+    ]
+  }
+]

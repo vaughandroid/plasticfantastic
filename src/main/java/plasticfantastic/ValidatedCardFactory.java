@@ -15,6 +15,10 @@
  */
 package plasticfantastic;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSyntaxException;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,6 +26,55 @@ import java.util.List;
  * A factory for {@link ValidatedCard} instances.
  */
 public class ValidatedCardFactory {
+
+    /**
+     * Parse a JSON string into a factory.
+     * <p>
+     * TODO: describe JSON format
+     *
+     * @param json to parse
+     * @return a new factory, initialised with the given data
+     * @throws NullPointerException if json is null
+     * @throws JsonSyntaxException if json syntax is not valid
+     * @throws JsonParseException if the data is not valid for some reason
+     */
+    public static ValidatedCardFactory fromJson(String json) {
+        if (json == null) {
+            throw new NullPointerException("json cannot be null");
+        }
+
+        CardTypeDefinition[] typeDefinitions = new Gson().fromJson(json, CardTypeDefinition[].class);
+
+        CardType[] cardTypes = new CardType[typeDefinitions.length];
+
+        for (int i = 0; i < typeDefinitions.length; i++) {
+            try {
+                CardTypeDefinition definition = typeDefinitions[i];
+                if (definition.name == null) {
+                    throw new JsonSyntaxException("Item " + i + " is missing 'name'.");
+                }
+                CardType.Builder builder = new CardType.Builder(); // TODO: use name
+
+                if (definition.numberPatterns == null
+                        || definition.numberPatterns.length == 0) {
+                    throw new JsonSyntaxException("Item " + i + " is missing 'numberPatterns'.");
+                }
+                builder.addNumberPatterns(definition.numberPatterns);
+
+                if (definition.validLengths == null
+                        || definition.validLengths.length == 0) {
+                    throw new JsonSyntaxException("Item " + i + " is missing 'validLengths'.");
+                }
+                builder.validLengths(definition.validLengths);
+
+                cardTypes[i] = builder.build();
+            } catch (IllegalArgumentException e) {
+                throw new JsonParseException("Item " + i + " has invalid data.", e);
+            }
+        }
+
+        return new ValidatedCardFactory(cardTypes);
+    }
 
     private final List<CardType> cardTypes;
 
@@ -98,5 +151,19 @@ public class ValidatedCardFactory {
         }
 
         return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{cardTypes:[");
+        for (int i = 0; i < cardTypes.size(); i++) {
+            if (i > 0) {
+                sb.append(", ");
+            }
+            sb.append(cardTypes.get(i).toString());
+        }
+        sb.append("]}");
+        return sb.toString();
     }
 }

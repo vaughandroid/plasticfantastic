@@ -1,0 +1,76 @@
+[
+  {
+    "name": "American Express",
+    "patterns": [
+      "34",
+      "35"
+    ],
+    "validLengths": [
+      15
+    ]
+  },
+  {
+    "name": "China UnionPay",
+    "patterns": [
+      "62"
+    ],
+    "validLengths": [
+      16, 17, 18, 19
+    ]
+  },
+  {
+    "name": "Diners Club International",
+    "patterns": [ "300-305", "309", "36", "38", "39" ],
+    "validLengths": [ 14 ]
+  },
+  {
+    "name": "Diners Club US & Canada",
+    "patterns": [ "54", "55" ],
+    "validLengths": [ 16 ]
+  },
+  {
+    "name": "Discover",
+    "patterns": [ "622126-622925", "644-649", "6011", "65" ],
+    "validLengths": [ 16 ]
+  },
+  {
+    "name": "InterPayment",
+    "patterns": [ "636" ],
+    "validLengths": [ 16, 17, 18, 19 ]
+  },
+  {
+    "name": "InstaPayment",
+    "patterns": [ "637-639" ],
+    "validLengths": [ 16 ]
+  },
+  {
+    "name": "JCB",
+    "patterns": [ "3528-3589" ],
+    "validLengths": [ 16 ]
+  },
+  {
+    "name": "Maestro",
+    "patterns": [ "500000-509999", "560000-699999" ],
+    "validLengths": [ 12, 13, 14, 15, 16, 17, 18, 19 ]
+  },
+  {
+    "name": "Dankort",
+    "patterns": [ "5019" ],
+    "validLengths": [ 16 ]
+  },
+  {
+    "name": "Mastercard",
+    "patterns": [ "51-55" ],
+    "validLengths": [ 16 ]
+  },
+  {
+    "name": "Visa",
+    "patterns": [ "4" ],
+    "validLengths": [ 13, 16 ]
+  },
+  {
+    "name": "UATP",
+    "patterns": [ "1" ],
+    "validLengths": [ 15 ]
+  }
+]

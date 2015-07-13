@@ -161,6 +161,23 @@ public class CardType {
             return this;
         }
 
+        public Builder addNumberPatterns(String... patterns) { // TODO: tests
+            if (patterns == null) {
+                throw new NullPointerException();
+            }
+            for (int i = 0; i < patterns.length; i++) {
+                if (patterns[i] != null) {
+                    // TODO: stricter check for pattern type
+                    if (patterns[i].contains("-")) {
+                        patternList.add(new RangePattern(patterns[i]));
+                    } else {
+                        patternList.add(new SingleNumberPattern(patterns[i]));
+                    }
+                }
+            }
+            return this;
+        }
+
         /**
          * Set the allowable lengths for the card type.
          *
