@@ -54,7 +54,7 @@ public class CardTypeBuilder_InvalidLengths {
         Throwable caught = null;
         try {
             new CardType.Builder("Type Name")
-                    .addSingleNumberPatterns("123")
+                    .addNumberPatterns("123")
                     .validLengths(lengths)
                     .build();
         } catch (Throwable t) {

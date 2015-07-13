@@ -28,7 +28,7 @@ import static org.junit.Assert.assertThat;
 public class ValidatedCard_Misc {
 
     private static final CardType CARD_TYPE = new CardType.Builder("Type Name")
-            .addSingleNumberPatterns("1234")
+            .addNumberPatterns("1234")
             .validLengths(10)
             .build();
 

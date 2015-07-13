@@ -41,7 +41,7 @@ public class CardType {
      */
     public static class Builder {
         private final String name;
-        private final List<NumberPattern> patternList = new ArrayList<NumberPattern>();
+        private List<NumberPattern> patternList;
         private int[] validLengths;
 
         /**
@@ -55,66 +55,26 @@ public class CardType {
         }
 
         /**
-         * Add a set of single number prefixes for the card type. e.g. "1234", "56", "789"
+         * Add a list of number patterns for the card type.
          * <p>
-         * Calling this method multiple times will add more patterns.
-         *
-         * @param patterns one or more strings of digits
-         * @return the builder instance, for method chaining
-         * @throws NullPointerException     if patterns is null, or one or more of the pattern strings is null
-         * @throws IllegalArgumentException if one or more of the patterns is invalid
-         */
-        public Builder addSingleNumberPatterns(String... patterns) {
-            if (patterns == null) {
-                throw new NullPointerException();
-            }
-            for (int i = 0; i < patterns.length; i++) {
-                patternList.add(new SingleNumberPattern(patterns[i]));
-            }
-            return this;
-        }
-
-        /**
-         * A set of range prefixes for the card type. Each range pattern should consist of the lowest number
-         * (inclusive), then a hyphen, then the highest number (also inclusive). e.g. "12-34", "567-890".
+         * * A set of prefixes for the card type, which can be either single numbers or a range.
+         * <p>
+         * Each range pattern should consist of the lowest number (inclusive), then a hyphen, then the highest number
+         * (also inclusive). e.g. "12-34", "567-890".
          * <p>
          * A limitation is that the low and high numbers must have the same number of digits, so a pattern such as
          * "1-20" is considered invalid. If needed, this can be achieved by simply adding 2 patterns - e.g. "1-9" &amp;
          * "10-20".
-         * <p>
-         * Calling this method multiple times will add more patterns.
-         *
-         * @param patterns one or more strings of range patterns
-         * @return the builder instance, for method chaining
-         * @throws NullPointerException     if patterns is null, or one or more of the pattern strings is null
-         * @throws IllegalArgumentException if one or more of the patterns is invalid
-         */
-        public Builder addRangePatterns(String... patterns) {
-            if (patterns == null) {
-                throw new NullPointerException();
-            }
-            for (int i = 0; i < patterns.length; i++) {
-                patternList.add(new RangePattern(patterns[i]));
-            }
-            return this;
-        }
-
-        /**
-         * Add a list of number patterns for the card type.
-         * <p>
-         * TODO: document pattern requirements.
-         * <p>
-         * Calling this method multiple times will add more patterns.
          *
          * @param patterns one or more strings of digits
          * @return the builder instance, for method chaining
-         * @throws NullPointerException     if patterns is null, or one or more of the pattern strings is null
          * @throws IllegalArgumentException if one or more of the patterns is invalid
          */
-        public Builder addNumberPatterns(String... patterns) { // TODO: tests
+        public Builder addNumberPatterns(String... patterns) {
             if (patterns == null) {
                 throw new NullPointerException();
             }
+            patternList = new ArrayList<NumberPattern>(patterns.length);
             for (int i = 0; i < patterns.length; i++) {
                 if (patterns[i] != null) {
                     // TODO: stricter check for pattern type
@@ -160,7 +120,7 @@ public class CardType {
          *                               been defined.
          */
         public CardType build() {
-            if (patternList.size() == 0) {
+            if (patternList == null || patternList.size() == 0) {
                 throw new IllegalStateException("Must define one or more card number patterns.");
             }
             if (validLengths == null || validLengths.length == 0) {

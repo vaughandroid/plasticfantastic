@@ -31,9 +31,9 @@ import static org.junit.Assert.assertThat;
 @RunWith(Parameterized.class)
 public class ValidatedCardFactory_FailedCreation {
 
-    private static final CardType TYPE_1 = new CardType.Builder("Type Name").addSingleNumberPatterns("123").validLengths(10).build();
-    private static final CardType TYPE_2 = new CardType.Builder("Type Name").addSingleNumberPatterns("1234").validLengths(11).build();
-    private static final CardType TYPE_3 = new CardType.Builder("Type Name").addSingleNumberPatterns("1234").validLengths(10).build();
+    private static final CardType TYPE_1 = new CardType.Builder("Type Name").addNumberPatterns("123").validLengths(10).build();
+    private static final CardType TYPE_2 = new CardType.Builder("Type Name").addNumberPatterns("1234").validLengths(11).build();
+    private static final CardType TYPE_3 = new CardType.Builder("Type Name").addNumberPatterns("1234").validLengths(10).build();
 
     private static final ValidatedCardFactory FACTORY = new ValidatedCardFactory(TYPE_1, TYPE_2, TYPE_3);
 

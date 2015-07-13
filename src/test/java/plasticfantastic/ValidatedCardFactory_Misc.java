@@ -29,8 +29,8 @@ import static org.junit.Assert.assertThat;
  */
 public class ValidatedCardFactory_Misc {
 
-    private static final CardType TYPE_1 = new CardType.Builder("Type Name").addSingleNumberPatterns("123").validLengths(10).build();
-    private static final CardType TYPE_2 = new CardType.Builder("Type Name").addSingleNumberPatterns("456").validLengths(11).build();
+    private static final CardType TYPE_1 = new CardType.Builder("Type Name").addNumberPatterns("123").validLengths(10).build();
+    private static final CardType TYPE_2 = new CardType.Builder("Type Name").addNumberPatterns("456").validLengths(11).build();
 
     @Test(expected = NullPointerException.class)
     public void pass_null_to_constructor_using_varargs_throws_NullPointerException() {
