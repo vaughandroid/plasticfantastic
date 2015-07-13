@@ -278,21 +278,21 @@ public class CardType {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{ patterns: { ");
+        sb.append("{patterns:[");
         for (int i = 0; i < numberPatterns.length; i++) {
             if (i > 0) {
                 sb.append(", ");
             }
             sb.append(numberPatterns[i]);
         }
-        sb.append(" }, valid lengths: { ");
+        sb.append("], lengths:[");
         for (int i = 0; i < validLengths.length; i++) {
             if (i > 0) {
                 sb.append(", ");
             }
             sb.append(validLengths[i]);
         }
-        sb.append(" } }");
+        sb.append("]}");
 
         return sb.toString();
     }
