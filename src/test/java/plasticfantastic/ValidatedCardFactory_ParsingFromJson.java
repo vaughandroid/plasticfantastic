@@ -80,7 +80,10 @@ public class ValidatedCardFactory_ParsingFromJson {
                 is(equalTo(EXPECTED_STRING_VALID)));
     }
 
-    // TODO: invalid
+    @Test(expected = JsonParseException.class)
+    public void fromFile_with_invalid_data_throws_JsonParseException() throws IOException {
+        ValidatedCardFactory.fromFile(new File(getResourcePath("invalid_data.json")));
+    }
 
     @Test
     public void fromReader_with_valid_data_returns_expected() throws IOException {
@@ -94,5 +97,13 @@ public class ValidatedCardFactory_ParsingFromJson {
         }
     }
 
-    // TODO: invalid
+    @Test(expected = JsonParseException.class)
+    public void fromReader_with_invalid_data_throws_JsonParseException() throws IOException {
+        FileReader reader = new FileReader(getResourcePath("invalid_data.json"));
+        try {
+            ValidatedCardFactory.fromReader(reader);
+        } finally {
+            reader.close();
+        }
+    }
 }
