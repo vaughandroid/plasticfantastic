@@ -145,7 +145,7 @@ public class ValidatedCardFactory {
     /**
      * Create a factory from  a list of {@link CardTypeDefinition}s.
      *
-     * @param typeDefinitions
+     * @param typeDefinitions list of card type definitions
      * @return a new factory, initialised with the given data
      * @throws IllegalArgumentException if typeDefinitions is empty, or any of them have missing/invalid data
      */

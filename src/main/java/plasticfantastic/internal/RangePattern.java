@@ -21,7 +21,7 @@ import java.math.BigInteger;
 
 /**
  * Matches {@link CardNumber}s against a range of prefixes.
- * </p>
+ * <p>
  * A limitation is that the low and high numbers must have the same number of digits.
  */
 public class RangePattern implements NumberPattern {
