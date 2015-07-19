@@ -71,7 +71,7 @@ public class ValidatedCardFactory {
 
     /**
      * Parse a JSON string into a factory.
-     * <p/>
+     * <p>
      * See {@link ValidatedCardFactory} for details of the expected JSON structure.
      *
      * @param json to parse
@@ -91,7 +91,7 @@ public class ValidatedCardFactory {
 
     /**
      * Create a factory from a JSON file.
-     * <p/>
+     * <p>
      * See {@link ValidatedCardFactory} for details of the expected JSON structure.
      * 
      * @param file the file to read
@@ -121,7 +121,7 @@ public class ValidatedCardFactory {
 
     /**
      * Parse the JSON output of a {@link Reader} a into a factory.
-     * <p/>
+     * <p>
      * See {@link ValidatedCardFactory} for details of the expected JSON structure.
      *
      * @param reader which provides the JSON to be parsed
@@ -200,7 +200,7 @@ public class ValidatedCardFactory {
 
     /**
      * Create a new factory with the given card types.
-     * <p/>
+     * <p>
      * Note that the list of card types is in priority order. i.e. When matching, the first {@link CardType} matching
      * the card number's pattern will be used.
      *
@@ -214,7 +214,7 @@ public class ValidatedCardFactory {
 
     /**
      * Create a new factory with the given card types.
-     * <p/>
+     * <p>
      * Note that the list of card types is in priority order. i.e. When matching, the first {@link CardType} matching
      * the card number's pattern will be used.
      *
@@ -226,10 +226,17 @@ public class ValidatedCardFactory {
         if (cardTypes == null) {
             throw new NullPointerException("cardTypes cannot be null");
         }
-        if (cardTypes.isEmpty()) {
-            throw new IllegalArgumentException("cardTypes cannot be empty");
-        }
         this.cardTypes = cardTypes;
+    }
+
+    /**
+     * Get the list of card types used by the factory. This returns the actual instance used by the list, so changes
+     * to the list will affect the factory.
+     *
+     * @return the list of card types used by this factory
+     */
+    public List<CardType> getCardTypesList() {
+        return cardTypes;
     }
 
     /**
@@ -246,7 +253,7 @@ public class ValidatedCardFactory {
 
     /**
      * Create a {@link ValidatedCard}.
-     * <p/>
+     * <p>
      * If there are multiple matches, the {@link CardType} with the strongest match is used. If there are multiple
      * matches with the same strength, the first of them is used.
      *
