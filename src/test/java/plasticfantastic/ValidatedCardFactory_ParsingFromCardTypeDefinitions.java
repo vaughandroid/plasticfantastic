@@ -15,11 +15,9 @@
  */
 package plasticfantastic;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.equalTo;

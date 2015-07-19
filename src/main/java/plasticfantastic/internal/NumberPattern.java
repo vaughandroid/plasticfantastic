@@ -13,16 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package plasticfantastic;
+package plasticfantastic.internal;
+
+import plasticfantastic.CardNumber;
 
 /**
- * POJO for holding {@link CardType} data parsed from JSON files.
+ * Common interface for classes used to match {@link CardNumber}s.
  */
-public class CardTypeDefinition {
+public interface NumberPattern {
 
-    private static final char RANGE_VALUE_SEPARATOR = '-';
+    /**
+     * Check whether a given card number matches the pattern.
+     *
+     * @param cardNumber to check
+     * @return true if the card number is a match for the pattern
+     */
+    boolean isMatch(CardNumber cardNumber);
 
-    public String name;
-    public String[] numberPatterns;
-    public int[] validLengths;
+    /**
+     * @return the number of digits used for a match with this pattern
+     */
+    int getLength();
 }

@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package plasticfantastic;
+package plasticfantastic.internal;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import plasticfantastic.CardNumber;
 
 import java.util.Arrays;
 
@@ -26,40 +27,36 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Tests for {@link RangePattern}.
+ * Tests for {@link SingleNumberPattern}.
  */
 @RunWith(Parameterized.class)
-public class RangePattern_MatchingAndLength {
+public class SingleNumberPattern_MatchingAndLength {
 
     @Parameterized.Parameters
     public static Iterable<Object[]> buildParameters() {
         return Arrays.asList(new Object[][]{
-                {"200", "400", "200", true, 3},
-                {"200", "400", "300", true, 3},
-                {"200", "400", "400", true, 3},
-                {"200", "400", "199", false, 3},
-                {"200", "400", "401", false, 3},
-                {"200", "400", "0300", false, 3},
-                {"200", "400", "030", false, 3},
-                {"200", "400", "30", false, 3},
-                {"010", "020", "010", true, 3},
-                {"010", "020", "015", true, 3},
-                {"010", "020", "020", true, 3},
-                {"010", "020", "15", false, 3},
-                {"010", "020", "0015", false, 3},
-                {"1234", "1234", "1234", true, 4},
-                {"123456", "123456", "123456", true, 6},
+                {"1234", "1234", true, 4},
+                {"1234", "1234567890", true, 4},
+                {"1234", "123", false, 4},
+                {"1234", "1", false, 4},
+                {"1234", "4321", false, 4},
+                {"1234", "234", false, 4},
+                {"1234", "5", false, 4},
+                {"01234", "01234", true, 5},
+                {"01234", "012345", true, 5},
+                {"1234", "0123", false, 4},
+                {"012345", "12345", false, 6},
         });
     }
 
-    private final RangePattern pattern;
+    private final String patternString;
     private final String cardNumberString;
     private final boolean shouldMatch;
     private final int expectedLength;
 
-    public RangePattern_MatchingAndLength(String min, String max, String cardNumberString, boolean shouldMatch,
-                                          int expectedLength) {
-        pattern = new RangePattern(min, max);
+    public SingleNumberPattern_MatchingAndLength(String patternString, String cardNumberString, boolean shouldMatch,
+                                                 int expectedLength) {
+        this.patternString = patternString;
         this.cardNumberString = cardNumberString;
         this.shouldMatch = shouldMatch;
         this.expectedLength = expectedLength;
@@ -67,15 +64,16 @@ public class RangePattern_MatchingAndLength {
 
     @Test
     public void potential_matches_correctly_identified() {
+        SingleNumberPattern pattern = new SingleNumberPattern(patternString);
         CardNumber cardNumber = new CardNumber(cardNumberString);
-        assertThat("Pattern: " + pattern.toString() + ", card number: " + cardNumberString,
+        assertThat("Pattern: " + patternString + ", card number: " + cardNumberString,
                 pattern.isMatch(cardNumber), is(equalTo(shouldMatch)));
     }
 
     @Test
     public void length_matches_expected() {
-        CardNumber cardNumber = new CardNumber(cardNumberString);
-        assertThat("Pattern: " + pattern.toString(),
+        SingleNumberPattern pattern = new SingleNumberPattern(patternString);
+        assertThat("Pattern: " + patternString,
                 pattern.getLength(), is(equalTo(expectedLength)));
     }
 }

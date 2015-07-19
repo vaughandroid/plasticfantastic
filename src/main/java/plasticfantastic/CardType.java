@@ -15,6 +15,10 @@
  */
 package plasticfantastic;
 
+import plasticfantastic.internal.NumberPattern;
+import plasticfantastic.internal.RangePattern;
+import plasticfantastic.internal.SingleNumberPattern;
+
 import java.util.ArrayList;
 import java.util.List;
 
