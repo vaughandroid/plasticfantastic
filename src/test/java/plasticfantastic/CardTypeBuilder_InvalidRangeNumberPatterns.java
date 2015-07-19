@@ -41,6 +41,8 @@ public class CardTypeBuilder_InvalidRangeNumberPatterns {
                 {new String[]{"-123"}},
                 {new String[]{"1-23"}},
                 {new String[]{"99-11"}},
+                {new String[]{" 99-11"}},
+                {new String[]{"99-11 "}},
         });
     }
 

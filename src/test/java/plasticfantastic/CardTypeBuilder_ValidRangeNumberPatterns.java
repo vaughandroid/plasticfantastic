@@ -31,6 +31,9 @@ public class CardTypeBuilder_ValidRangeNumberPatterns {
     public static Iterable<Object[]> buildParameters() {
         return Arrays.asList(new Object[][]{
                 {new String[]{"0000-1111"}},
+                {new String[]{"22 -33"}},
+                {new String[]{"44- 55"}},
+                {new String[]{"66 - 77"}},
                 {new String[]{"1234-5678"}},
                 {new String[]{"1234567890-2345678901"}},
                 {new String[]{"1234-5678", "5678-9012"}},

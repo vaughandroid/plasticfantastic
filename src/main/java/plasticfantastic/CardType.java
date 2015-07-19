@@ -35,9 +35,8 @@ public class CardType {
      * You must specify at least one pattern (single number/range) and at least one valid length for the card type.
      */
     public static class Builder {
-        private static final String REGEX_WHITESPACE = "\\s";
         private static final String REGEX_SINGLE_NUMBER = "^[0-9]+$";
-        private static final String REGEX_RANGE = "^[0-9]+[-][0-9]+$"; // TODO: could allow spaces too
+        private static final String REGEX_RANGE = "^[0-9]+\\s*[-]\\s*[0-9]+$";
 
         private final String name;
         private final List<NumberPattern> patternList = new ArrayList<NumberPattern>();
@@ -79,8 +78,8 @@ public class CardType {
                         patternList.add(new SingleNumberPattern(patterns[i]));
                     } else if (patterns[i].matches(REGEX_RANGE)) {
                         int hyphenIdx = patterns[i].indexOf('-');
-                        String min = patterns[i].substring(0, hyphenIdx);
-                        String max = patterns[i].substring(hyphenIdx + 1);
+                        String min = patterns[i].substring(0, hyphenIdx).trim();
+                        String max = patterns[i].substring(hyphenIdx + 1).trim();
                         patternList.add(new RangePattern(min, max));
                     } else {
                         throw new IllegalArgumentException("Unrecognised pattern: \"" + patterns[i] + "\"");
