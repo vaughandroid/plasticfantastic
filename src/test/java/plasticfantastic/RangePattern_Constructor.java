@@ -23,27 +23,32 @@ import org.junit.Test;
 public class RangePattern_Constructor {
 
     @Test(expected = NullPointerException.class)
-    public void pass_null_throws_NullPointerException() {
-        new RangePattern(null);
+    public void pass_null_min_throws_NullPointerException() {
+        new RangePattern(null, "1");
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void pass_null_max_throws_NullPointerException() {
+        new RangePattern("1", null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void pass_string_with_missing_max_throws_IllegalArgumentException() {
-        new RangePattern("123-");
+    public void pass_empty_min_throws_IllegalArgumentException() {
+        new RangePattern("", "1");
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void pass_string_with_missing_min_throws_IllegalArgumentException() {
-        new RangePattern("-123");
+    public void pass_empty_max_throws_IllegalArgumentException() {
+        new RangePattern("1", "");
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void pass_string_with_no_hyphen_throws_IllegalArgumentException() {
-        new RangePattern("123456");
+    public void pass_min_greater_than_max_throws_IllegalArgumentException() {
+        new RangePattern("11", "10");
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void pass_string_with_whitespace_throws_IllegalArgumentException() {
-        new RangePattern("123 - 456");
+    @Test
+    public void pass_min_equal_to_max_is_allowed() {
+        new RangePattern("10", "10");
     }
 }

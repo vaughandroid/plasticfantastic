@@ -15,12 +15,7 @@
  */
 package plasticfantastic;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,6 +35,10 @@ public class CardType {
      * You must specify at least one pattern (single number/range) and at least one valid length for the card type.
      */
     public static class Builder {
+        private static final String REGEX_WHITESPACE = "\\s";
+        private static final String REGEX_SINGLE_NUMBER = "^[0-9]+$";
+        private static final String REGEX_RANGE = "^[0-9]+[-][0-9]+$"; // TODO: could allow spaces too
+
         private final String name;
         private final List<NumberPattern> patternList = new ArrayList<NumberPattern>();
         private int[] validLengths;
@@ -76,11 +75,15 @@ public class CardType {
             }
             for (int i = 0; i < patterns.length; i++) {
                 if (patterns[i] != null) {
-                    // TODO: stricter check for pattern type
-                    if (patterns[i].contains("-")) {
-                        patternList.add(new RangePattern(patterns[i]));
-                    } else {
+                    if (patterns[i].matches(REGEX_SINGLE_NUMBER)) {
                         patternList.add(new SingleNumberPattern(patterns[i]));
+                    } else if (patterns[i].matches(REGEX_RANGE)) {
+                        int hyphenIdx = patterns[i].indexOf('-');
+                        String min = patterns[i].substring(0, hyphenIdx);
+                        String max = patterns[i].substring(hyphenIdx + 1);
+                        patternList.add(new RangePattern(min, max));
+                    } else {
+                        throw new IllegalArgumentException("Unrecognised pattern: \"" + patterns[i] + "\"");
                     }
                 }
             }
