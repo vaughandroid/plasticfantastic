@@ -37,8 +37,8 @@ public class ValidatedCardFactory_Misc {
         new ValidatedCardFactory((CardType[]) null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void pass_empty_array_to_constructor_throws_IllegalArgumentException() {
+    @Test
+    public void pass_empty_array_to_constructor_is_accepted() {
         new ValidatedCardFactory(new CardType[0]);
     }
 
@@ -47,8 +47,8 @@ public class ValidatedCardFactory_Misc {
         new ValidatedCardFactory((List<CardType>) null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void pass_empty_list_to_constructor_throws_IllegalArgumentException() {
+    @Test
+    public void pass_empty_list_to_constructor_is_accepted() {
         new ValidatedCardFactory(new ArrayList<CardType>());
     }
 
