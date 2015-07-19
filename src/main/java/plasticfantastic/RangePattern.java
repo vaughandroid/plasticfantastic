@@ -24,53 +24,47 @@ import java.math.BigInteger;
  */
 class RangePattern implements NumberPattern {
 
-    private static final String REGEX_WHITESPACE = "\\s";
-    private static final String REGEX_VALID = "^[0-9]+[-][0-9]+$";
+    private static final String REGEX_NUMBERS_ONLY = "^[0-9]+$";
 
-    private final String pattern;
     private final int checkLen;
     private final BigInteger minVal;
     private final BigInteger maxVal;
 
     /**
-     * @param pattern lowest number (inclusive), then a hyphen, then the highest number (also inclusive).
-     *                e.g. "12-34", "567-890"
-     * @throws NullPointerException     if pattern is null
-     * @throws IllegalArgumentException if pattern is not valid
+     * @param min lowest number (inclusive)
+     * @param max highest number (inclusive)
+     * @throws NullPointerException     if min or max is null
+     * @throws IllegalArgumentException if min or max is not a valid number
      */
-    RangePattern(String pattern) {
-        if (pattern == null) {
-            throw new NullPointerException("Pattern cannot be null");
+    RangePattern(String min, String max) {
+        if (min == null || max == null) {
+            throw new NullPointerException("min and max cannot be null");
         }
-        if (!pattern.matches(REGEX_VALID)) {
-            throw new IllegalArgumentException("Pattern not valid: " + pattern);
+        if (!min.matches(REGEX_NUMBERS_ONLY)) {
+            throw new IllegalArgumentException("min not valid: " + min);
         }
-        pattern = pattern.replaceAll(REGEX_WHITESPACE, "");
-        this.pattern = pattern;
-
-        int hyphenIdx = pattern.indexOf('-');
-        String minStr = pattern.substring(0, hyphenIdx);
-        String maxStr = pattern.substring(hyphenIdx + 1);
-
-        if (minStr.length() != maxStr.length()) {
+        if (!max.matches(REGEX_NUMBERS_ONLY)) {
+            throw new IllegalArgumentException("max not valid: " + max);
+        }
+        if (min.length() != max.length()) {
             throw new IllegalArgumentException("Min & max must have the same number of digits");
         }
-        checkLen = minStr.length();
+        checkLen = min.length();
 
         try {
-            minVal = new BigInteger(minStr);
+            minVal = new BigInteger(min);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Unexpected error when parsing min: " + minStr);
+            throw new IllegalArgumentException("Unexpected error when parsing min: " + min);
         }
 
         try {
-            maxVal = new BigInteger(maxStr);
+            maxVal = new BigInteger(max);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Unexpected error when parsing max: " + maxStr);
+            throw new IllegalArgumentException("Unexpected error when parsing max: " + max);
         }
 
         if (minVal.compareTo(maxVal) > 0) {
-            throw new IllegalArgumentException("Min must be less than max: " + pattern);
+            throw new IllegalArgumentException("Min (" + min + ") cannot be greater than max (" + max + ")");
         }
     }
 
@@ -93,6 +87,6 @@ class RangePattern implements NumberPattern {
 
     @Override
     public String toString() {
-        return pattern;
+        return minVal + "-" + maxVal;
     }
 }

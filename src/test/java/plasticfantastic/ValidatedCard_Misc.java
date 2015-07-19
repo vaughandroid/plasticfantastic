@@ -15,7 +15,6 @@
  */
 package plasticfantastic;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -28,9 +27,9 @@ import static org.junit.Assert.assertThat;
  */
 public class ValidatedCard_Misc {
 
-    private static final CardType CARD_TYPE = new CardType.Builder()
-            .addSingleNumberPatterns("1234")
-            .validLengths(10)
+    private static final CardType CARD_TYPE = new CardType.Builder("Type Name")
+            .withNumberPatterns("1234")
+            .withValidLengths(10)
             .build();
 
     @Test(expected = NullPointerException.class)

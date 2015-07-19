@@ -15,14 +15,12 @@
  */
 package plasticfantastic;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -33,9 +31,9 @@ import static org.junit.Assert.assertThat;
 @RunWith(Parameterized.class)
 public class ValidatedCardFactory_FailedCreation {
 
-    private static final CardType TYPE_1 = new CardType.Builder().addSingleNumberPatterns("123").validLengths(10).build();
-    private static final CardType TYPE_2 = new CardType.Builder().addSingleNumberPatterns("1234").validLengths(11).build();
-    private static final CardType TYPE_3 = new CardType.Builder().addSingleNumberPatterns("1234").validLengths(10).build();
+    private static final CardType TYPE_1 = new CardType.Builder("Type Name").withNumberPatterns("123").withValidLengths(10).build();
+    private static final CardType TYPE_2 = new CardType.Builder("Type Name").withNumberPatterns("1234").withValidLengths(11).build();
+    private static final CardType TYPE_3 = new CardType.Builder("Type Name").withNumberPatterns("1234").withValidLengths(10).build();
 
     private static final ValidatedCardFactory FACTORY = new ValidatedCardFactory(TYPE_1, TYPE_2, TYPE_3);
 

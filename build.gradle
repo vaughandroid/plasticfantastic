@@ -12,7 +12,9 @@ repositories {
 }
 
 dependencies {
+    compile 'com.google.code.gson:gson:2.3.1'
     testCompile 'junit:junit:4.11'
+    testCompile 'commons-io:commons-io:2.4'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {

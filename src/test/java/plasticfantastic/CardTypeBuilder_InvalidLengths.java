@@ -26,7 +26,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Tests for passing invalid length values to {@link plasticfantastic.CardType.Builder#validLengths(int...)}.
+ * Tests for passing invalid length values to {@link plasticfantastic.CardType.Builder#withValidLengths(int...)}.
  */
 @RunWith(Parameterized.class)
 public class CardTypeBuilder_InvalidLengths {
@@ -53,9 +53,9 @@ public class CardTypeBuilder_InvalidLengths {
     public void pattern_is_accepted_or_throws_IllegalArgumentException() {
         Throwable caught = null;
         try {
-            new CardType.Builder()
-                    .addSingleNumberPatterns("123")
-                    .validLengths(lengths)
+            new CardType.Builder("Type Name")
+                    .withNumberPatterns("123")
+                    .withValidLengths(lengths)
                     .build();
         } catch (Throwable t) {
             caught = t;

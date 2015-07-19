@@ -31,10 +31,9 @@ import static org.junit.Assert.assertThat;
 @RunWith(Parameterized.class)
 public class CardType_CardNumberChecks {
 
-    private static CardType CARD_TYPE = new CardType.Builder()
-            .addSingleNumberPatterns("101", "202")
-            .addRangePatterns("300-400", "501-502")
-            .validLengths(10, 12)
+    private static CardType CARD_TYPE = new CardType.Builder("Type Name")
+            .withNumberPatterns("101", "202", "300-400", "501-502")
+            .withValidLengths(10, 12)
             .build();
 
     @Parameterized.Parameters

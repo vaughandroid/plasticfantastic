@@ -16,7 +16,6 @@
 package plasticfantastic;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -30,133 +29,62 @@ import java.util.List;
  */
 public class CardType {
 
-    public static final CardType AMERICAN_EXPRESS = new Builder()
-            .addSingleNumberPatterns("34", "37")
-            .validLengths(15)
-            .build();
-    public static final CardType CHINA_UNIONPAY = new Builder()
-            .addSingleNumberPatterns("62")
-            .validLengths(16, 17, 18, 19)
-            .build();
-    public static final CardType DINERS_CLUB_CARTE_BLANCHE = new Builder()
-            .addRangePatterns("300-305")
-            .validLengths(14)
-            .build();
-    public static final CardType DINERS_CLUB_INTERNATIONAL = new Builder()
-            .addSingleNumberPatterns("309", "36", "38", "39")
-            .addRangePatterns("300-305")
-            .validLengths(14)
-            .build();
-    public static final CardType DINERS_CLUB_US_AND_CANADA = new Builder()
-            .addSingleNumberPatterns("54", "55")
-            .validLengths(16)
-            .build();
-    public static final CardType DISCOVER = new Builder()
-            .addSingleNumberPatterns("6011", "65")
-            .addRangePatterns("622126-622925", "644-649")
-            .validLengths(16)
-            .build();
-    public static final CardType INTERPAYMENT = new Builder()
-            .addSingleNumberPatterns("636")
-            .validLengths(16, 17, 18, 19)
-            .build();
-    public static final CardType INSTAPAYMENT = new Builder()
-            .addRangePatterns("637-639")
-            .validLengths(16)
-            .build();
-    public static final CardType JCB = new Builder()
-            .addRangePatterns("3528-3589")
-            .validLengths(16)
-            .build();
-    public static final CardType MAESTRO = new Builder()
-            .addRangePatterns("500000-509999", "560000-699999")
-            .validLengths(12, 13, 14, 15, 16, 17, 18, 19)
-            .build();
-    public static final CardType DANKORT = new Builder()
-            .addSingleNumberPatterns("5019")
-            .validLengths(16)
-            .build();
-    public static final CardType MASTERCARD = new Builder()
-            .addRangePatterns("51-55")
-            .validLengths(16)
-            .build();
-    public static final CardType VISA = new Builder()
-            .addSingleNumberPatterns("4")
-            .validLengths(13, 16)
-            .build();
-    public static final CardType UATP = new Builder()
-            .addSingleNumberPatterns("1")
-            .validLengths(15)
-            .build();
-
-    public static List<CardType> createListWithAllTypes() {
-        return Arrays.asList(
-                AMERICAN_EXPRESS,
-                CHINA_UNIONPAY,
-                DINERS_CLUB_CARTE_BLANCHE,
-                DINERS_CLUB_INTERNATIONAL,
-                DINERS_CLUB_US_AND_CANADA,
-                DISCOVER,
-                INTERPAYMENT,
-                INSTAPAYMENT,
-                JCB,
-                MAESTRO,
-                DANKORT,
-                MASTERCARD,
-                VISA,
-                UATP);
-    }
-
     /**
      * Builder for {@link CardType} instances.
      * <p>
      * You must specify at least one pattern (single number/range) and at least one valid length for the card type.
      */
     public static class Builder {
+        private static final String REGEX_SINGLE_NUMBER = "^[0-9]+$";
+        private static final String REGEX_RANGE = "^[0-9]+\\s*[-]\\s*[0-9]+$";
+
+        private final String name;
         private final List<NumberPattern> patternList = new ArrayList<NumberPattern>();
         private int[] validLengths;
 
         /**
-         * Add a set of single number prefixes for the card type. e.g. "1234", "56", "789"
-         * <p>
-         * Calling this method multiple times will add more patterns.
-         *
-         * @param patterns one or more strings of digits
-         * @return the builder instance, for method chaining
-         * @throws NullPointerException     if patterns is null, or one or more of the pattern strings is null
-         * @throws IllegalArgumentException if one or more of the patterns is invalid
+         * @param name name of the card type
          */
-        public Builder addSingleNumberPatterns(String... patterns) {
-            if (patterns == null) {
-                throw new NullPointerException();
+        public Builder(String name) {
+            if (name == null) {
+                throw new NullPointerException("name cannot be null");
             }
-            for (int i = 0; i < patterns.length; i++) {
-                patternList.add(new SingleNumberPattern(patterns[i]));
-            }
-            return this;
+            this.name = name;
         }
 
         /**
-         * A set of range prefixes for the card type. Each range pattern should consist of the lowest number
-         * (inclusive), then a hyphen, then the highest number (also inclusive). e.g. "12-34", "567-890".
+         * Add a list of number patterns for the card type.
+         * <p>
+         * * A set of prefixes for the card type, which can be either single numbers or a range.
+         * <p>
+         * Each range pattern should consist of the lowest number (inclusive), then a hyphen, then the highest number
+         * (also inclusive). e.g. "12-34", "567-890".
          * <p>
          * A limitation is that the low and high numbers must have the same number of digits, so a pattern such as
          * "1-20" is considered invalid. If needed, this can be achieved by simply adding 2 patterns - e.g. "1-9" &amp;
          * "10-20".
-         * <p>
-         * Calling this method multiple times will add more patterns.
          *
-         * @param patterns one or more strings of range patterns
+         * @param patterns one or more strings of digits
          * @return the builder instance, for method chaining
-         * @throws NullPointerException     if patterns is null, or one or more of the pattern strings is null
          * @throws IllegalArgumentException if one or more of the patterns is invalid
          */
-        public Builder addRangePatterns(String... patterns) {
+        public Builder withNumberPatterns(String... patterns) {
             if (patterns == null) {
                 throw new NullPointerException();
             }
             for (int i = 0; i < patterns.length; i++) {
-                patternList.add(new RangePattern(patterns[i]));
+                if (patterns[i] != null) {
+                    if (patterns[i].matches(REGEX_SINGLE_NUMBER)) {
+                        patternList.add(new SingleNumberPattern(patterns[i]));
+                    } else if (patterns[i].matches(REGEX_RANGE)) {
+                        int hyphenIdx = patterns[i].indexOf('-');
+                        String min = patterns[i].substring(0, hyphenIdx).trim();
+                        String max = patterns[i].substring(hyphenIdx + 1).trim();
+                        patternList.add(new RangePattern(min, max));
+                    } else {
+                        throw new IllegalArgumentException("Unrecognised pattern: \"" + patterns[i] + "\"");
+                    }
+                }
             }
             return this;
         }
@@ -169,7 +97,7 @@ public class CardType {
          * @throws NullPointerException     if validLengths is null
          * @throws IllegalArgumentException if validLengths is empty, or one or more of the length values is &lt;= 0
          */
-        public Builder validLengths(int... validLengths) {
+        public Builder withValidLengths(int... validLengths) {
             if (validLengths == null) {
                 throw new NullPointerException();
             }
@@ -193,23 +121,32 @@ public class CardType {
          *                               been defined.
          */
         public CardType build() {
-            if (patternList.size() == 0) {
+            if (patternList == null || patternList.size() == 0) {
                 throw new IllegalStateException("Must define one or more card number patterns.");
             }
             if (validLengths == null || validLengths.length == 0) {
                 throw new IllegalStateException("Must define one or more length values.");
             }
             NumberPattern[] patterns = patternList.toArray(new NumberPattern[patternList.size()]);
-            return new CardType(patterns, validLengths);
+            return new CardType(name, patterns, validLengths);
         }
     }
 
+    private final String name;
     private final NumberPattern[] numberPatterns;
     private final int[] validLengths;
 
-    private CardType(NumberPattern[] numberPatterns, int[] validLengths) {
+    private CardType(String name, NumberPattern[] numberPatterns, int[] validLengths) {
+        this.name = name;
         this.numberPatterns = numberPatterns;
         this.validLengths = validLengths;
+    }
+
+    /**
+     * @return the name of the card type
+     */
+    public String getName() {
+        return name;
     }
 
     /**
@@ -278,21 +215,23 @@ public class CardType {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{ patterns: { ");
+        sb.append("{name:\"");
+        sb.append(name);
+        sb.append("\", patterns:[");
         for (int i = 0; i < numberPatterns.length; i++) {
             if (i > 0) {
                 sb.append(", ");
             }
             sb.append(numberPatterns[i]);
         }
-        sb.append(" }, valid lengths: { ");
+        sb.append("], lengths:[");
         for (int i = 0; i < validLengths.length; i++) {
             if (i > 0) {
                 sb.append(", ");
             }
             sb.append(validLengths[i]);
         }
-        sb.append(" } }");
+        sb.append("]}");
 
         return sb.toString();
     }

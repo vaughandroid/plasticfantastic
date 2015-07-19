@@ -22,7 +22,6 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -36,36 +35,36 @@ public class CardType_ToString {
     public static Iterable<Object[]> buildParameters() {
         return Arrays.asList(new Object[][]{
                 {
-                        new CardType.Builder().addSingleNumberPatterns("123").validLengths(10).build(),
-                        "{ patterns: { 123 }, valid lengths: { 10 } }"
+                        new CardType.Builder("Test").withNumberPatterns("123").withValidLengths(10).build(),
+                        "{name:\"Test\", patterns:[123], lengths:[10]}"
                 },
                 {
-                        new CardType.Builder().addSingleNumberPatterns("123", "456", "789").validLengths(10).build(),
-                        "{ patterns: { 123, 456, 789 }, valid lengths: { 10 } }"
+                        new CardType.Builder("Type Name").withNumberPatterns("123", "456", "789").withValidLengths(10).build(),
+                        "{name:\"Type Name\", patterns:[123, 456, 789], lengths:[10]}"
                 },
                 {
-                        new CardType.Builder().addRangePatterns("12-34").validLengths(10).build(),
-                        "{ patterns: { 12-34 }, valid lengths: { 10 } }"
+                        new CardType.Builder("Type Name").withNumberPatterns("12-34").withValidLengths(10).build(),
+                        "{name:\"Type Name\", patterns:[12-34], lengths:[10]}"
                 },
                 {
-                        new CardType.Builder().addRangePatterns("12-34", "56-78").validLengths(10).build(),
-                        "{ patterns: { 12-34, 56-78 }, valid lengths: { 10 } }"
+                        new CardType.Builder("Type Name").withNumberPatterns("12-34", "56-78").withValidLengths(10).build(),
+                        "{name:\"Type Name\", patterns:[12-34, 56-78], lengths:[10]}"
                 },
                 {
-                        new CardType.Builder().addSingleNumberPatterns("123").addRangePatterns("12-34").validLengths(10).build(),
-                        "{ patterns: { 123, 12-34 }, valid lengths: { 10 } }"
+                        new CardType.Builder("Type Name").withNumberPatterns("123", "12-34").withValidLengths(10).build(),
+                        "{name:\"Type Name\", patterns:[123, 12-34], lengths:[10]}"
                 },
                 {
-                        new CardType.Builder().addSingleNumberPatterns("123").addRangePatterns("12-34").addSingleNumberPatterns("456").validLengths(10).build(),
-                        "{ patterns: { 123, 12-34, 456 }, valid lengths: { 10 } }"
+                        new CardType.Builder("Type Name").withNumberPatterns("123", "12-34", "456").withValidLengths(10).build(),
+                        "{name:\"Type Name\", patterns:[123, 12-34, 456], lengths:[10]}"
                 },
                 {
-                        new CardType.Builder().addSingleNumberPatterns("123").validLengths(10, 11, 12).build(),
-                        "{ patterns: { 123 }, valid lengths: { 10, 11, 12 } }"
+                        new CardType.Builder("Type Name").withNumberPatterns("123").withValidLengths(10, 11, 12).build(),
+                        "{name:\"Type Name\", patterns:[123], lengths:[10, 11, 12]}"
                 },
                 {
-                        new CardType.Builder().addSingleNumberPatterns("123").validLengths(12, 11, 10).build(),
-                        "{ patterns: { 123 }, valid lengths: { 12, 11, 10 } }"
+                        new CardType.Builder("Type Name").withNumberPatterns("123").withValidLengths(12, 11, 10).build(),
+                        "{name:\"Type Name\", patterns:[123], lengths:[12, 11, 10]}"
                 },
         });
     }

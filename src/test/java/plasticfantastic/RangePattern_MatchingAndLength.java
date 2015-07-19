@@ -34,32 +34,32 @@ public class RangePattern_MatchingAndLength {
     @Parameterized.Parameters
     public static Iterable<Object[]> buildParameters() {
         return Arrays.asList(new Object[][]{
-                {"200-400", "200", true, 3},
-                {"200-400", "300", true, 3},
-                {"200-400", "400", true, 3},
-                {"200-400", "199", false, 3},
-                {"200-400", "401", false, 3},
-                {"200-400", "0300", false, 3},
-                {"200-400", "030", false, 3},
-                {"200-400", "30", false, 3},
-                {"010-020", "010", true, 3},
-                {"010-020", "015", true, 3},
-                {"010-020", "020", true, 3},
-                {"010-020", "15", false, 3},
-                {"010-020", "0015", false, 3},
-                {"1234-1234", "1234", true, 4},
-                {"123456-123456", "123456", true, 6},
+                {"200", "400", "200", true, 3},
+                {"200", "400", "300", true, 3},
+                {"200", "400", "400", true, 3},
+                {"200", "400", "199", false, 3},
+                {"200", "400", "401", false, 3},
+                {"200", "400", "0300", false, 3},
+                {"200", "400", "030", false, 3},
+                {"200", "400", "30", false, 3},
+                {"010", "020", "010", true, 3},
+                {"010", "020", "015", true, 3},
+                {"010", "020", "020", true, 3},
+                {"010", "020", "15", false, 3},
+                {"010", "020", "0015", false, 3},
+                {"1234", "1234", "1234", true, 4},
+                {"123456", "123456", "123456", true, 6},
         });
     }
 
-    private final String patternString;
+    private final RangePattern pattern;
     private final String cardNumberString;
     private final boolean shouldMatch;
     private final int expectedLength;
 
-    public RangePattern_MatchingAndLength(String patternString, String cardNumberString, boolean shouldMatch,
+    public RangePattern_MatchingAndLength(String min, String max, String cardNumberString, boolean shouldMatch,
                                           int expectedLength) {
-        this.patternString = patternString;
+        pattern = new RangePattern(min, max);
         this.cardNumberString = cardNumberString;
         this.shouldMatch = shouldMatch;
         this.expectedLength = expectedLength;
@@ -67,17 +67,15 @@ public class RangePattern_MatchingAndLength {
 
     @Test
     public void potential_matches_correctly_identified() {
-        RangePattern pattern = new RangePattern(patternString);
         CardNumber cardNumber = new CardNumber(cardNumberString);
-        assertThat("Pattern: " + patternString + ", card number: " + cardNumberString,
+        assertThat("Pattern: " + pattern.toString() + ", card number: " + cardNumberString,
                 pattern.isMatch(cardNumber), is(equalTo(shouldMatch)));
     }
 
     @Test
     public void length_matches_expected() {
-        RangePattern pattern = new RangePattern(patternString);
         CardNumber cardNumber = new CardNumber(cardNumberString);
-        assertThat("Pattern: " + patternString,
+        assertThat("Pattern: " + pattern.toString(),
                 pattern.getLength(), is(equalTo(expectedLength)));
     }
 }

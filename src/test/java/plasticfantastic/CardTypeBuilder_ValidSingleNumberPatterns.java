@@ -22,7 +22,8 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 
 /**
- * Tests for passing valid arguments to {@link plasticfantastic.CardType.Builder#addSingleNumberPatterns(String...)}.
+ * Tests for passing valid single number arguments to
+ * {@link plasticfantastic.CardType.Builder#withNumberPatterns(String...)}.
  */
 @RunWith(Parameterized.class)
 public class CardTypeBuilder_ValidSingleNumberPatterns {
@@ -46,6 +47,6 @@ public class CardTypeBuilder_ValidSingleNumberPatterns {
 
     @Test
     public void pattern_is_accepted() {
-        new CardType.Builder().addSingleNumberPatterns(numberPatterns);
+        new CardType.Builder("Type Name").withNumberPatterns(numberPatterns);
     }
 }

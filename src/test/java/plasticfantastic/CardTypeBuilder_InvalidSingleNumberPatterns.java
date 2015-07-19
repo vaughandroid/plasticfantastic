@@ -21,12 +21,12 @@ import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Tests for passing invalid arguments to {@link plasticfantastic.CardType.Builder#addSingleNumberPatterns(String...)}.
+ * Tests for passing invalid single number arguments to
+ * {@link plasticfantastic.CardType.Builder#withNumberPatterns(String...)}.
  */
 @RunWith(Parameterized.class)
 public class CardTypeBuilder_InvalidSingleNumberPatterns {
@@ -34,29 +34,20 @@ public class CardTypeBuilder_InvalidSingleNumberPatterns {
     @Parameterized.Parameters
     public static Iterable<Object[]> buildParameters() {
         return Arrays.asList(new Object[][]{
-                {new String[]{null}, NullPointerException.class},
-                {new String[]{""}, IllegalArgumentException.class},
-                {new String[]{"1 2"}, IllegalArgumentException.class},
-                {new String[]{","}, IllegalArgumentException.class},
+                {new String[]{""}},
+                {new String[]{"1 2"}},
+                {new String[]{","}},
         });
     }
 
     private final String[] numberPatterns;
-    private final Class<Exception> expectedException;
 
-    public CardTypeBuilder_InvalidSingleNumberPatterns(String[] numberPatterns, Class<Exception> expectedException) {
+    public CardTypeBuilder_InvalidSingleNumberPatterns(String[] numberPatterns) {
         this.numberPatterns = numberPatterns;
-        this.expectedException = expectedException;
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void pattern_is_accepted_or_throws_IllegalArgumentException() {
-        Throwable caught = null;
-        try {
-            new CardType.Builder().addSingleNumberPatterns(numberPatterns).validLengths(10).build();
-        } catch (Throwable t) {
-            caught = t;
-        }
-        assertThat(numberPatterns.toString(), caught, is(instanceOf(expectedException)));
+        new CardType.Builder("Type Name").withNumberPatterns(numberPatterns).withValidLengths(10).build();
     }
 }
