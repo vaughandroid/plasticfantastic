@@ -28,7 +28,31 @@ import java.util.logging.Logger;
 /**
  * A factory for {@link ValidatedCard} instances.
  * <p>
- * TODO: document JSON format
+ * <strong>JSON format</strong><br>
+ * A factory can be created from appropriately structured JSON data. The data must consist of a list of objects, each
+ * with the following fields:
+ * <ul>
+ *     <li>&quot;name&quot; <em>(String)</em> - the card type's name</li>
+ *     <li>&quot;numberPatterns&quot; <em>(list of Strings)</em> - the number patterns for the card type</li>
+ *     <li>&quot;validLengths&quot; <em>(list of ints)</em> - the allowed lengths for the card type</li>
+ * </ul>
+ * Number patterns can be either a single number or a range. Ranges are specified as {@code "min-max"} with optional
+ * whitespace around the hyphen.
+ * <p>
+ * For example:
+ * <pre>
+ * [
+ *   {
+ *     "name": "American Express",
+ *     "numberPatterns": [ "34", "35" ],
+ *     "validLengths": [ 15 ]
+ *   },
+ *   {
+ *     "name": "China UnionPay",
+ *     "numberPatterns": [ "62" ],
+ *     "validLengths": [ 16, 17, 18, 19 ]
+ *   }
+ * ]</pre>
  */
 public class ValidatedCardFactory {
 
