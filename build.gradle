@@ -1,5 +1,5 @@
 group 'com.github.vaughandroid'
-version '0.9.5'
+version '0.9.6-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'maven'
